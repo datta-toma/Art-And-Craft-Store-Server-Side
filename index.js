@@ -36,8 +36,16 @@ async function run() {
     const ArtCollection = client.db("paintingDB").collection("Portrait Drawing");
     const PrintCollection = client.db("paintingDB").collection("Watercolor Painting");
     const DratCollection = client.db("paintingDB").collection(" Oil Painting");
+    const AnyCollection = client.db("paintingDB").collection("Charcoal Sketching");
 
     const userCollection = client.db('paintingDB').collection("user");
+
+    app.post('/craft', async(req, res) =>{
+      const newCraft = req.body;
+      console.log(newCraft)
+      const result = await AnyCollection.insertOne(newCraft);
+      res.send(result);
+  })
 
     app.post('/craft', async(req, res) =>{
       const newCraft = req.body;
