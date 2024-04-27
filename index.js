@@ -33,7 +33,7 @@ async function run() {
     await client.connect();
 
     const CraftCollection = client.db("paintingDB").collection("Landscape_Painting");
-
+    const userCollection = client.db('paintingDB').collection("user");
 
 
     app.post('/craft', async(req, res) =>{
@@ -43,7 +43,13 @@ async function run() {
         res.send(result);
     })
 
-
+// user related apis
+app.post('/user', async(req, res) =>{
+  const user = req.body;
+  console.log(user);
+  const result = await userCollection.insertOne(user);
+  res.send(result);
+})
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
