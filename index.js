@@ -33,7 +33,15 @@ async function run() {
     await client.connect();
 
     const CraftCollection = client.db("paintingDB").collection("Landscape_Painting");
+    const ArtCollection = client.db("paintingDB").collection("Portrait Drawing");
     const userCollection = client.db('paintingDB').collection("user");
+
+    app.post('/craft', async(req, res) =>{
+      const newCraft = req.body;
+      console.log(newCraft)
+      const result = await ArtCollection.insertOne(newCraft);
+      res.send(result);
+  })
 
 
     app.post('/craft', async(req, res) =>{
