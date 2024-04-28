@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -31,61 +31,88 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
-
-    const CraftCollection = client.db("paintingDB").collection("Landscape_Painting");
-    const ArtCollection = client.db("paintingDB").collection("Portrait Drawing");
-    const PrintCollection = client.db("paintingDB").collection("Watercolor Painting");
-    const DratCollection = client.db("paintingDB").collection(" Oil Painting");
-    const AnyCollection = client.db("paintingDB").collection("Charcoal Sketching");
-    const AtCollection = client.db("paintingDB").collection("Cartoon Drawing");
+    const AllCraftCollection = client.db("paintingDB").collection("Painting");
+    // const ArtCollection = client.db("paintingDB").collection("Portrait Drawing");
+    // const PrintCollection = client.db("paintingDB").collection("Watercolor Painting");
+    // const DratCollection = client.db("paintingDB").collection(" Oil Painting");
+    // const AnyCollection = client.db("paintingDB").collection("Charcoal Sketching");
+    // const AtCollection = client.db("paintingDB").collection("Cartoon Drawing");
 
     const userCollection = client.db('paintingDB').collection("user");
 
-    app.post('/craft', async(req, res) =>{
-      const newCraft = req.body;
-      console.log(newCraft)
-      const result = await AtCollection.insertOne(newCraft);
-      res.send(result);
-  })
+
+  
+  
 
     app.post('/craft', async(req, res) =>{
       const newCraft = req.body;
       console.log(newCraft)
-      const result = await AnyCollection.insertOne(newCraft);
+      const result = await AllCraftCollection.insertOne(newCraft);
       res.send(result);
   })
 
-    app.post('/craft', async(req, res) =>{
-      const newCraft = req.body;
-      console.log(newCraft)
-      const result = await DratCollection.insertOne(newCraft);
-      res.send(result);
-  })
+  //   app.post('/craft', async(req, res) =>{
+  //     const newCraft = req.body;
+  //     console.log(newCraft)
+  //     const result = await AtCollection.insertOne(newCraft);
+  //     res.send(result);
+  // })
+
+  //   app.post('/craft', async(req, res) =>{
+  //     const newCraft = req.body;
+  //     console.log(newCraft)
+  //     const result = await AnyCollection.insertOne(newCraft);
+  //     res.send(result);
+  // })
+
+  //   app.post('/craft', async(req, res) =>{
+  //     const newCraft = req.body;
+  //     console.log(newCraft)
+  //     const result = await DratCollection.insertOne(newCraft);
+  //     res.send(result);
+  // })
  
-    app.post('/craft', async(req, res) =>{
-      const newCraft = req.body;
-      console.log(newCraft)
-      const result = await PrintCollection.insertOne(newCraft);
-      res.send(result);
+  //   app.post('/craft', async(req, res) =>{
+  //     const newCraft = req.body;
+  //     console.log(newCraft)
+  //     const result = await PrintCollection.insertOne(newCraft);
+  //     res.send(result);
+  // })
+
+
+  //   app.post('/craft', async(req, res) =>{
+  //     const newCraft = req.body;
+  //     console.log(newCraft)
+  //     const result = await CraftCollection.insertOne(newCraft);
+  //     res.send(result);
+  // })
+
+
+  //   app.post('/craft', async(req, res) =>{
+  //     const newCraft = req.body;
+  //     console.log(newCraft)
+  //     const result = await ArtCollection.insertOne(newCraft);
+  //     res.send(result);
+  // })
+
+
+  app.get('/craft', async(req, res) =>{
+    const cursor = AllCraftCollection.find();
+    const result = await cursor.toArray();
+    res.send(result)
+    console.log(result)
   })
 
+  // update
 
-    app.post('/craft', async(req, res) =>{
-      const newCraft = req.body;
-      console.log(newCraft)
-      const result = await CraftCollection.insertOne(newCraft);
-      res.send(result);
+  app.get('/craft/:id', async(req, res) => {
+    const id = req.params.id;
+    console.log(id)
+    const query = {_id: new ObjectId(id)}
+
+    const result = await AllCraftCollection.findOne(query);
+    res.send(result);
   })
-
-
-    app.post('/craft', async(req, res) =>{
-      const newCraft = req.body;
-      console.log(newCraft)
-      const result = await ArtCollection.insertOne(newCraft);
-      res.send(result);
-  })
-
-
 
 
   
