@@ -109,7 +109,6 @@ async function run() {
     const id = req.params.id;
     console.log(id)
     const query = {_id: new ObjectId(id)}
-
     const result = await AllCraftCollection.findOne(query);
     res.send(result);
   })
@@ -121,6 +120,37 @@ async function run() {
     res.send(result);
   })
   
+  // update
+  app.get('/craft/:id', async(req, res) => {
+    const id = req.params.id;
+    console.log(id)
+    const query = {_id: new ObjectId(id)}
+    const result = await AllCraftCollection.findOne(query);
+    res.send(result);
+  })
+
+  app.put("/craft/:id", async (req, res) => {
+    const { id } = req.params; 
+    const filter = { _id: new ObjectId(id) }; 
+    const update = req.body;
+  
+    const craftUpdate = {
+      $set: {
+        item_name: update.item_name,
+        subcategory_name: update.subcategory_name,
+        short_description: update.short_description,
+        url: update.url,
+        price: update.price,
+        stockStatus: update.stockStatus,
+        processing_time: update.processing_time,
+        customization: update.customization,
+      },
+    };
+  
+    const result = await AllCraftCollection.updateOne(filter, craftUpdate);
+  
+    res.send(result);
+  });
 
 
 
