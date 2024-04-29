@@ -153,6 +153,14 @@ async function run() {
   });
 
 
+  // delete 
+  app.delete('/craft/:id', async(req, res) =>{
+    const id = req.params.id;
+    const query = {_id: new ObjectId(id)}
+    const result = await AllCraftCollection.deleteOne(query);
+    res.send(result);
+  })
+
 
   
 
