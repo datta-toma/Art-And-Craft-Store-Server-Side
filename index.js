@@ -103,7 +103,7 @@ async function run() {
     console.log(result)
   })
 
-  // update
+
 
   app.get('/craft/:id', async(req, res) => {
     const id = req.params.id;
@@ -115,6 +115,11 @@ async function run() {
   })
 
 
+  app.get("/cardList/:email", async(req, res) =>{
+    console.log(req.params.email);
+    const result = await AllCraftCollection.find({email:req.params.email}).toArray();
+    res.send(result);
+  })
   
 
 
