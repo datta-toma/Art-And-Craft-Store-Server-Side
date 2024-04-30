@@ -9,9 +9,6 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// paintingMaster
-// 71LZXW2n8ssD9UtL
-
 
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.cg4ihxy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
@@ -30,8 +27,10 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
     const AllCraftCollection = client.db("paintingDB").collection("Painting");
+
+   
     // const ArtCollection = client.db("paintingDB").collection("Portrait Drawing");
     // const PrintCollection = client.db("paintingDB").collection("Watercolor Painting");
     // const DratCollection = client.db("paintingDB").collection(" Oil Painting");
@@ -41,8 +40,7 @@ async function run() {
     const userCollection = client.db('paintingDB').collection("user");
 
 
-  
-  
+
 
     app.post('/craft', async(req, res) =>{
       const newCraft = req.body;
@@ -50,6 +48,9 @@ async function run() {
       const result = await AllCraftCollection.insertOne(newCraft);
       res.send(result);
   })
+
+
+  
 
   //   app.post('/craft', async(req, res) =>{
   //     const newCraft = req.body;
@@ -78,7 +79,7 @@ async function run() {
   //     const result = await PrintCollection.insertOne(newCraft);
   //     res.send(result);
   // })
-
+     
 
   //   app.post('/craft', async(req, res) =>{
   //     const newCraft = req.body;
@@ -104,6 +105,7 @@ async function run() {
   })
 
 
+  
 
   app.get('/craft/:id', async(req, res) => {
     const id = req.params.id;
